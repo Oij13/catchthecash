@@ -1,1 +1,45 @@
 
+Intro Screen:
+
+
+
+
+
+
+
+
+Game Screen:
+Sprites:
+Charlie
+Coins
+Damage coins
+Non-Sprite Asset
+Sound effect for coin
+Sound effect for damage coin
+
+
+Charlie: 
+50 by 50 sprite
+Position at bottom of the screen centered
+Move speed 5
+Process: Will be able to move left and right with arrows
+
+
+Coin: https://opengameart.org/content/coin-icon 
+Default size for coin
+Transparent
+Starts at top of screen and resets when hits the bottom
+Not wraps
+Multiple coins at once
+At each reset, randomly place the x value of coin
+Y = 10
+X = random within screen width
+Dy = random speed within 3-8
+If Charlie collides with coin, play sndCoin https://opengameart.org/content/plingy-coin 
+Bad Cloud: https://opengameart.org/content/bad-cloud 
+Same size as coin
+Transparent
+Same behaviors as coin
+Less clouds than coins on screen
+If Charlie hits cloud, play sndCloud: https://opengameart.org/content/bad-sound-2 
+
