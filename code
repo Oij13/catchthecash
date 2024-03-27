@@ -32,7 +32,7 @@ class Game(simpleGE.Scene):
         self.sndCoin = simpleGE.Sound("coin.wav")
         self.sndHurt = simpleGE.Sound("lose sound 2 - 1_0.wav")
         self.numCoins = 5
-        self.numHurts = 5
+        self.numHurts = 3
         
         self.charlie = Charlie(self)
         
