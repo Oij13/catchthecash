@@ -30,23 +30,31 @@ class Game(simpleGE.Scene):
         self.setImage("Campus.jpg")
         
         self.sndCoin = simpleGE.Sound("coin.wav")
-        self.numCoins = 10
+        self.sndHurt = simpleGE.Sound("lose sound 2 - 1_0.wav")
+        self.numCoins = 5
+        self.numHurts = 5
         
         self.charlie = Charlie(self)
         
         self.coins = []
+        self.hurts = []
+        
         for i in range(self.numCoins):
             self.coins.append(Coin(self))
-    
+        for i in range(self.numHurts):
+            self.hurts.append(Hurt(self))
 
-        self.sprites = [self.charlie, self.coins,]
+        self.sprites = [self.charlie, self.coins, self.hurts]
     
     def process(self):
         for coin in self.coins:
             if coin.collidesWith(self.charlie):
                 coin.reset()
                 self.sndCoin.play()
-
+        for hurt in self.hurts:
+            if hurt.collidesWith(self.charlie):
+                hurt.reset()
+                self.sndHurt.play()
 
 class Coin(simpleGE.Sprite):
     
@@ -69,7 +77,27 @@ class Coin(simpleGE.Sprite):
         if self.bottom > self.screen.get_height():
             self.reset()
         
+class Hurt(simpleGE.Sprite):
+    
+    def __init__(self, scene):
+        super().__init__(scene)
+        self.setImage("BadCloud.png")
         
+        self.setSize(25, 25)
+        self.minSpeed = 3 
+        self.maxSpeed = 6
+        self.reset()
+        
+    def reset(self):
+        self.y = 10
+        self.x = random.randint(0, 640)
+        self.dy = random.randint(self.minSpeed, self.maxSpeed)
+        
+        
+    def checkBounds(self):
+        if self.bottom > self.screen.get_height():
+            self.reset()
+                
    
         
         
