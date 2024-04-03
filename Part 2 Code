@@ -14,14 +14,32 @@ class Charlie(simpleGE.Sprite):
         self.setSize(50, 50)
         self.position = (320, 400)
         self.moveSpeed = 5
+        self.inAir = True
    
         
         
     def process(self):
-        if self.isKeyPressed(pygame.K_LEFT):
+        if self.isKeyPressed(pygame.K_a):
             self.x -= self.moveSpeed
-        if self.isKeyPressed(pygame.K_RIGHT):
+        if self.isKeyPressed(pygame.K_d):
             self.x += self.moveSpeed
+       
+        if self.inAir:
+            self.addForce(.2,270)
+            
+        if self.y > 400:
+            self.inAir = False
+            self.y = 400
+            self.dy = 0
+            
+            
+        if self.scene.isKeyPressed(pygame.K_SPACE):
+            self.dy = 0
+            self.addForce(5,90)
+            if not self.inAir:
+                self.addForce(6,90)
+                self.inAir = True 
+        
 
             
 class LblScore(simpleGE.Label):
@@ -80,7 +98,8 @@ class Game(simpleGE.Scene):
             if hurt.collidesWith(self.charlie):
                 hurt.reset()
                 self.sndHurt.play()
-                self.score -= 1
+                if self.score > 0:
+                    self.score -= 1
                 self.lblScore.text = f"Score: {self.score}"
         self.lblTime.text = f"Time left: {self.timer.getTimeLeft():.2}"
         
@@ -139,17 +158,17 @@ class Instruction(simpleGE.Scene):
         self.directions = simpleGE.MultiLabel()
         self.directions.textLines = [
         "You are Ball State's mascot",
-        "Move your character with the left and right arrow keys",
+        "Move character with the left and right arrow keys",
         "Catch as much cash as you can",
         "Avoid the clouds or lose points",
-        "",
+        "Press space to jump",
         "Good Luck and try to beat your last score!"]
         
         self.directions.center = (320, 240)
         self.directions.size = (500, 250)
         
         self.btnPlay = simpleGE.Button()
-        self.btnPlay.text = "Play"
+        self.btnPlay.text = "Play (Wa)"
         self.btnPlay.center = (100, 400)
         
         self.btnQuit = simpleGE.Button()
@@ -170,7 +189,7 @@ class Instruction(simpleGE.Scene):
         
         
     def process(self):
-        if self.btnPlay.clicked:
+        if self.btnPlay.clicked or self.isKeyPressed(pygame.K_w):
             self.response = "Play"
             self.stop()
             
@@ -188,7 +207,7 @@ def main():
         instructions = Instruction(lastScore)
         
         instructions.start()
-        if instructions.response == "Play":
+        if instructions.response == "Play" :
             game = Game()
             game.start()
             lastScore = game.score
