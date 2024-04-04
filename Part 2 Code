@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Thu Apr  4 19:35:34 2024
+
+@author: cmj17
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Tue Mar 26 12:00:06 2024
 
 @author: owen.johnson3
@@ -33,7 +40,7 @@ class Charlie(simpleGE.Sprite):
             self.dy = 0
             
             
-        if self.scene.isKeyPressed(pygame.K_SPACE):
+        if self.scene.isKeyPressed(pygame.K_SPACE) or self.isKeyPressed(pygame.K_w):
             self.dy = 0
             self.addForce(5,90)
             if not self.inAir:
@@ -69,6 +76,10 @@ class Game(simpleGE.Scene):
         self.timer = simpleGE.Timer()
         self.timer.totalTime = 10
         self.lblTime = LblTime()
+        
+        pygame.mixer.music.load("Daisy.mp3")
+        pygame.mixer.music.set_volume(.1)
+        pygame.mixer.music.play(-1)
         
         self.charlie = Charlie(self)
         
@@ -168,7 +179,7 @@ class Instruction(simpleGE.Scene):
         self.directions.size = (500, 250)
         
         self.btnPlay = simpleGE.Button()
-        self.btnPlay.text = "Play (Wa)"
+        self.btnPlay.text = "Play (W)"
         self.btnPlay.center = (100, 400)
         
         self.btnQuit = simpleGE.Button()
@@ -180,6 +191,10 @@ class Instruction(simpleGE.Scene):
         self.lblScore.center = (320, 400)
         
         self.lblScore.text = f"Last Score: {self.prevScore}"
+        
+        pygame.mixer.music.load("Daisy.mp3")
+        pygame.mixer.music.set_volume(.1)
+        pygame.mixer.music.play(-1)
         
         
         self.sprites = [self.directions,
